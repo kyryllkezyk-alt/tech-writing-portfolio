@@ -27,7 +27,7 @@ jobs:
           rm -rf /tmp/p/*/.github
           cp -a /tmp/p/*/. .
           rm portfolio.zip
-          grep -rl --exclude-dir=.git "KKUSER\|tech-writing-portfolio" . \
+          grep -rl --exclude-dir=.git --exclude-dir=.github "KKUSER\|tech-writing-portfolio" . \
             | xargs -r sed -i -e "s/KKUSER/${GITHUB_REPOSITORY_OWNER}/g" \
                               -e "s/tech-writing-portfolio/${GITHUB_REPOSITORY#*/}/g"
           git config user.name "github-actions[bot]"
