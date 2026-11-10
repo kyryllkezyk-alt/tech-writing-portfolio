@@ -1,5 +1,4 @@
 name: Build & deploy docs
-
 on:
   push:
     branches: [main]
