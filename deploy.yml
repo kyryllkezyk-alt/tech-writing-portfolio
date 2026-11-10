@@ -1,0 +1,57 @@
+name: Build & deploy docs
+
+on:
+  push:
+    branches: [main]
+    paths: ["portfolio.zip", "docs/**", "mkdocs.yml", "requirements.txt"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Unpack portfolio.zip (first publish only)
+        if: hashFiles('portfolio.zip') != ''
+        run: |
+          unzip -oq portfolio.zip -d /tmp/p
+          rm -rf /tmp/p/*/.github
+          cp -a /tmp/p/*/. .
+          rm portfolio.zip
+          grep -rl --exclude-dir=.git "KKUSER\|tech-writing-portfolio" . \
+            | xargs -r sed -i -e "s/KKUSER/${GITHUB_REPOSITORY_OWNER}/g" \
+                              -e "s/tech-writing-portfolio/${GITHUB_REPOSITORY#*/}/g"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Unpack portfolio"
+          git push
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: mkdocs build --strict
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
