@@ -1,0 +1,88 @@
+site_name: Kyryll Kezyk — Technical Writing Portfolio
+site_description: Documentation samples, standards and case studies from a technical writer with fifteen years in localization and content quality.
+site_author: Kyryll Kezyk
+site_url: https://kyryllkezyk-alt.github.io/tech-writing-portfolio/
+repo_url: https://github.com/kyryllkezyk-alt/tech-writing-portfolio
+repo_name: tech-writing-portfolio
+edit_uri: edit/main/docs/
+copyright: © Kyryll Kezyk. Samples are original work written for portfolio purposes.
+
+theme:
+  name: material
+  language: en
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - content.code.copy
+    - content.action.edit
+    - content.tabs.link
+    - search.suggest
+    - search.highlight
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black
+      accent: lime
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: lime
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+nav:
+  - Home: index.md
+  - Writing samples:
+      - Overview: samples/index.md
+      - "Tutorial: Quickstart": samples/quickstart.md
+      - "Reference: REST API": samples/api-reference.md
+      - "How-to: Right-to-left text": samples/rtl-guide.md
+      - "Concept: Translation memory leverage": samples/translation-memory.md
+      - Release notes 4.0: samples/release-notes.md
+      - Troubleshooting imports: samples/troubleshooting.md
+      - "Runbook: Stuck job queue": samples/runbook.md
+  - Standards:
+      - Style guide: standards/style-guide.md
+      - Terminology policy: standards/terminology.md
+      - Docs-as-code pipeline: standards/docs-as-code.md
+  - Case studies:
+      - Reversing a failed quality audit: case-studies/quality-audit.md
+      - Docs for a distributed linguist network: case-studies/contributor-docs.md
+  - About: about.md
